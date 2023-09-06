@@ -1,0 +1,48 @@
+version: '3'
+services:
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=example
+    volumes:
+      - db_data:/var/lib/mysql
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+  
+  web_rails: &web
+    environment:
+      - "CXXFLAGS=-std=c++14"
+    build:
+      context: .
+      args:
+        # [Choice] Ruby version: 2, 2.6
+        RUBY_VERSION: 3.1.1
+        # [Choice] Rails version: 6.1, 6.1.4
+        RAILS_VERSION: 7.0.2.3
+        # On Linux, you may need to update USER_UID and USER_GID below if not your local UID is not 1000.
+        USER_UID: 1000
+        USER_GID: 1000
+    volumes:
+      - ./app:/home/docker
+      - ./gems:/usr/local/bundle
+    command: sh -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      - PMA_USER=root
+      - UPLOAD_LIMIT=100M
+      - MAX_EXECUTION_TIME=600
+      - MEMORY_LIMIT=512M
+    ports:
+      - 80:80
+
+volumes:
+  db_data:
