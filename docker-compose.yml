@@ -3,9 +3,9 @@ services:
   db:
     image: postgres
     environment:
-      - POSTGRES_PASSWORD=example
+      - POSTGRES_PASSWORD=dev
     volumes:
-      - db_data:/var/lib/mysql
+      - db_data:/var/lib/postgresql/data
   adminer:
     image: adminer
     restart: always
