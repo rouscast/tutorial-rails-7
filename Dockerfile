@@ -15,8 +15,8 @@ RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources
 ### ADITIONAL PACKAGES ###
 # To compile and install native addons from npm you may also need to install build tools: build-essential 
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-    && apt-get -y install --no-install-recommends nodejs yarn python2 \
-    && apt-get clean
+    && apt-get -y install --no-install-recommends nodejs yarn python3 libssl-dev  \
+    && apt clean
 
 ### SETUP CURRENT USER ###
 RUN useradd -m ${USER} --uid=${USER_UID} | chpasswd

@@ -19,7 +19,7 @@ services:
       context: .
       args:
         # [Choice] Ruby version: 2, 2.6
-        RUBY_VERSION: 3.1.1
+        RUBY_VERSION: 3.1.4
         # [Choice] Rails version: 6.1, 6.1.4
         RAILS_VERSION: 7.0.2.3
         # On Linux, you may need to update USER_UID and USER_GID below if not your local UID is not 1000.
